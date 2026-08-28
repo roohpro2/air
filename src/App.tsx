@@ -64,50 +64,6 @@ export default function App() {
     return () => clearTimeout(appOpenTimer);
   }, []);
 
-  // Automatically request notification permissions on application launch (OneSignal / Browser Web Push)
-  useEffect(() => {
-    try {
-      if (typeof window !== 'undefined' && 'Notification' in window && typeof Notification.requestPermission === 'function') {
-        if (Notification.permission === 'default') {
-          const timer = setTimeout(() => {
-            try {
-              const res = Notification.requestPermission();
-              if (res && typeof res.then === 'function') {
-                res
-                  .then((permission) => {
-                    if (permission === 'granted') {
-                      try {
-                        localStorage.setItem('user_subscribed_notifications', 'true');
-                      } catch (_) {}
-                    }
-                  })
-                  .catch((err) => {
-                    console.warn('Notification permission request error', err);
-                  });
-              }
-            } catch (e) {
-              console.warn('Notification permission error', e);
-            }
-
-            if ((window as any).OneSignal) {
-              try {
-                (window as any).OneSignal.push(() => {
-                  (window as any).OneSignal.showSlidedownPrompt?.();
-                });
-              } catch (e) {
-                console.warn('OneSignal slidedown prompt error', e);
-              }
-            }
-          }, 600);
-
-          return () => clearTimeout(timer);
-        }
-      }
-    } catch (e) {
-      console.warn('Notification initialization check skipped:', e);
-    }
-  }, []);
-
   // Sync with URL Hash for dedicated links to every page and item (with 3-4 digit codes or item IDs)
   useEffect(() => {
     // Initial live data hydration in live / production mode
