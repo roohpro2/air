@@ -5,7 +5,9 @@ account_id = "fa73541af4fcdd947ab78c12fe990a34"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
-# Automatic Build Command for Worker CI/CD
+# Automatic Build Command for Worker CI/CD & Cloudflare Pages
+pages_build_output_dir = "dist"
+
 [build]
 command = "npm run build"
 
