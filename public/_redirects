@@ -1,9 +1,3 @@
-# Cloudflare Pages SPA Routing Rules
-# Main application entry point & base paths
-/ai/*    /index.html   200
-/ai      /index.html   200
-/item/*  /index.html   200
-/window/* /index.html  200
+# Cloudflare Workers Assets SPA Routing is handled via wrangler.toml [assets.not_found_handling = "single-page-application"]
+# Add custom 301/302 redirects below if needed:
 
-# Catch-all SPA route
-/*       /index.html   200
